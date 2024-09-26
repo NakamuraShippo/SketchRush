@@ -1,0 +1,38 @@
+auto_advance: true
+background_color: '#ffffff'
+canvas_size:
+- 512
+- 768
+colors:
+- '#000000'
+- '#ffffff'
+- '#0000ff'
+- '#ff0000'
+- '#ffff00'
+- '#00ff00'
+- '#ff00ff'
+key_config:
+  Clear: '1'
+  Decrease Pen Size: Minus
+  Eraser Tool: E
+  Increase Pen Size: Plus
+  Merged Save: F1
+  Next Color: C
+  Next Image: D
+  Previous Color: V
+  Previous Image: S
+  Redo: X
+  Save: F4
+  Undo: Z
+language_code: JP
+mouse_config:
+  Decrease Pen Size: Wheel Down
+  Eraser Tool: Right Button
+  Increase Pen Size: Wheel Up
+  Pen Size Decrease: Wheel Down
+  Pen Size Increase: Wheel Up
+  Pen Tool: Left Button
+save_counter: 48
+save_folder: V:/appdev/simplepainter/line
+save_name_template: blackline{:03d}.png
+use_tablet: false

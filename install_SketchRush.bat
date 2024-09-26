@@ -18,13 +18,15 @@ echo 仮想環境を作成しています...
 python -m venv venv
 call venv\Scripts\activate
 
-REM 必要なパッケージのインストール
+REM 必要なパッケージをインストール
 echo 必要なパッケージをインストールしています...
-pip install PyQt5 Pillow
+pip install PyQt5 Pillow PyYAML
 
 REM アプリケーションファイルのコピー
 echo アプリケーションファイルをコピーしています...
 copy main.py .
+xcopy /E /I language language
+if exist config.yaml copy config.yaml .
 
 echo インストールが完了しました。
 pause
