@@ -16,11 +16,11 @@ key_config:
   Decrease Pen Size: Minus
   Eraser Tool: E
   Increase Pen Size: Plus
-  Merged Save: S
+  Merged Save: F1
   Next Color: C
-  Next Image: →
+  Next Image: Right
   Previous Color: V
-  Previous Image: ←
+  Previous Image: Left
   Redo: X
   Save: Space
   Undo: Z
