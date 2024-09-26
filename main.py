@@ -247,6 +247,9 @@ class SettingsDialog(QDialog):
         self.parent.colors = self.colors
         self.parent.update_cursor()
 
+        # 背景色を変更した後に画面を更新
+        self.parent.update_display()
+
         # Save Key Configurations
         for action, (input_type, input_widget) in self.inputs.items():
             if input_type == 'key':
@@ -270,7 +273,7 @@ class SettingsDialog(QDialog):
 class PaintApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Black Line Paint App")
+        self.setWindowTitle("SketchRush")
 
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
@@ -488,6 +491,9 @@ class PaintApp(QMainWindow):
         new_paint_layer = QPixmap(new_size)
         new_paint_layer.fill(Qt.transparent)
         painter = QPainter(new_paint_layer)
+        # self.paint_layer が QPixmap であることを確認
+        if isinstance(self.paint_layer, QImage):
+            self.paint_layer = QPixmap.fromImage(self.paint_layer)
         painter.drawPixmap(0, 0, self.paint_layer)
         painter.end()
         self.paint_layer = new_paint_layer
@@ -585,27 +591,22 @@ class PaintApp(QMainWindow):
             QTimer.singleShot(0, self.update_display)
 
     def update_display(self):
-        if self.original_pixmap and self.paint_layer:
+        if self.original_pixmap:
             display_pixmap = QPixmap(self.original_pixmap)
-            painter = QPainter(display_pixmap)
-            painter.drawImage(0, 0, self.paint_layer)
-            painter.end()
-            # Scale the pixmap to fit the label
-            scaled_pixmap = display_pixmap.scaled(self.image_label.size(), Qt.KeepAspectRatio,
-                                                Qt.SmoothTransformation)
-            self.image_label.setPixmap(scaled_pixmap)
         else:
-            # No image loaded, display background color
-            size = self.default_canvas_size
-            pixmap = QPixmap(size)
-            pixmap.fill(self.background_color)
-            self.image_label.setPixmap(pixmap)
+            display_pixmap = QPixmap(self.default_canvas_size)
+            display_pixmap.fill(self.background_color)
+        painter = QPainter(display_pixmap)
+        # self.paint_layer が QPixmap であることを確認
+        if isinstance(self.paint_layer, QImage):
+            self.paint_layer = QPixmap.fromImage(self.paint_layer)
+        painter.drawPixmap(0, 0, self.paint_layer)
+        painter.end()
+        self.image_label.setPixmap(display_pixmap)
 
     def create_default_image(self):
-        size = self.default_canvas_size
-        self.original_pixmap = QPixmap(size)
-        self.original_pixmap.fill(self.background_color)
-        self.paint_layer = QImage(size, QImage.Format_ARGB32_Premultiplied)
+        self.original_pixmap = None
+        self.paint_layer = QPixmap(self.default_canvas_size)
         self.paint_layer.fill(Qt.transparent)
         self.update_display()
 
@@ -882,42 +883,37 @@ class PaintApp(QMainWindow):
             if not save_folder:
                 save_folder = QFileDialog.getExistingDirectory(self, self.translations["Select Save Folder"])
                 if not save_folder:
-                    return  # User canceled
+                    return  # ユーザーがキャンセル
                 self.save_folder = save_folder
 
             base_filename = self.save_name_template.format(self.save_counter)
             save_path = self.get_unique_filename(save_folder, base_filename)
 
-            # Merge the layers
+            # レイヤーをマージ
             merged_image = QPixmap(self.paint_layer.size())
             painter = QPainter(merged_image)
             if self.original_pixmap:
-                # Ensure original_pixmap is QPixmap
+                # original_pixmap が QPixmap であることを確認
                 if isinstance(self.original_pixmap, QImage):
-                    pixmap = QPixmap.fromImage(self.original_pixmap)
-                else:
-                    pixmap = self.original_pixmap
-                painter.drawPixmap(0, 0, pixmap)
+                    self.original_pixmap = QPixmap.fromImage(self.original_pixmap)
+                painter.drawPixmap(0, 0, self.original_pixmap)
             else:
                 painter.fillRect(merged_image.rect(), self.background_color)
 
-            # Ensure paint_layer is QPixmap
+            # self.paint_layer が QPixmap であることを確認
             if isinstance(self.paint_layer, QImage):
-                paint_pixmap = QPixmap.fromImage(self.paint_layer)
-            else:
-                paint_pixmap = self.paint_layer
-            painter.drawPixmap(0, 0, paint_pixmap)
+                self.paint_layer = QPixmap.fromImage(self.paint_layer)
+            painter.drawPixmap(0, 0, self.paint_layer)
 
             painter.end()
 
             merged_image.save(save_path, "PNG")
             print(f"Merged image saved as {save_path}")
 
-            self.save_counter += 1  # Increment save counter
+            self.save_counter += 1  # 保存カウンタをインクリメント
             self.save_settings()
         else:
             print("No paint layer to save.")
-
 
     def get_unique_filename(self, folder, base_filename):
         name, ext = os.path.splitext(base_filename)
