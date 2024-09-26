@@ -12,17 +12,17 @@ colors:
 - '#00ff00'
 - '#ff00ff'
 key_config:
-  Clear: '1'
+  Clear: Delete
   Decrease Pen Size: Minus
   Eraser Tool: E
   Increase Pen Size: Plus
-  Merged Save: F1
+  Merged Save: S
   Next Color: C
-  Next Image: D
+  Next Image: →
   Previous Color: V
-  Previous Image: S
+  Previous Image: ←
   Redo: X
-  Save: F4
+  Save: Space
   Undo: Z
 language_code: JP
 mouse_config:
