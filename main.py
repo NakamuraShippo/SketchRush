@@ -610,47 +610,66 @@ class PaintApp(QMainWindow):
         self.paint_layer.fill(Qt.transparent)
         self.update_display()
 
-    def get_image_coordinates(self, pos):
-        # Map from the main window coordinates to image_label coordinates
-        label_pos = self.image_label.mapFromGlobal(pos)
-
-        pixmap = self.image_label.pixmap()
-        if not pixmap:
-            return QPoint(-1, -1)
-
-        # Get the size of the displayed pixmap
-        pixmap_size = pixmap.size()
-
-        # Get the size of the image_label
-        label_size = self.image_label.size()
-
-        # Calculate the scale factor and offsets
-        if (self.original_pixmap.width() / self.original_pixmap.height()) > (
-                label_size.width() / label_size.height()):
-            # Image is wider than the label
-            scale = label_size.width() / self.original_pixmap.width()
-            scaled_height = self.original_pixmap.height() * scale
-            offset_x = 0
-            offset_y = (label_size.height() - scaled_height) / 2
+    def get_image_coordinates(self, global_pos):
+        local_pos = self.image_label.mapFromGlobal(global_pos)
+        pixmap = self.original_pixmap if self.original_pixmap else QPixmap(self.default_canvas_size)
+        if (pixmap.width() / pixmap.height()) > (self.image_label.width() / self.image_label.height()):
+            # 画像がラベルより横長の場合
+            scaled_width = self.image_label.width()
+            scaled_height = pixmap.height() * scaled_width / pixmap.width()
+            offset = (self.image_label.height() - scaled_height) / 2
+            x = local_pos.x() * pixmap.width() / self.image_label.width()
+            y = (local_pos.y() - offset) * pixmap.height() / scaled_height
         else:
-            # Image is taller than the label
-            scale = label_size.height() / self.original_pixmap.height()
-            scaled_width = self.original_pixmap.width() * scale
-            offset_x = (label_size.width() - scaled_width) / 2
-            offset_y = 0
+            # 画像がラベルより縦長の場合
+            scaled_height = self.image_label.height()
+            scaled_width = pixmap.width() * scaled_height / pixmap.height()
+            offset = (self.image_label.width() - scaled_width) / 2
+            x = (local_pos.x() - offset) * pixmap.width() / scaled_width
+            y = local_pos.y() * pixmap.height() / self.image_label.height()
+        return QPoint(int(x), int(y))
 
-        # Adjust label_pos to remove the offset
-        x = label_pos.x() - offset_x
-        y = label_pos.y() - offset_y
+    # def get_image_coordinates(self, pos):
+    #     # Map from the main window coordinates to image_label coordinates
+    #     label_pos = self.image_label.mapFromGlobal(pos)
 
-        if x < 0 or y < 0 or x > pixmap_size.width() or y > pixmap_size.height():
-            return QPoint(-1, -1)
+    #     pixmap = self.image_label.pixmap()
+    #     if not pixmap:
+    #         return QPoint(-1, -1)
 
-        # Map the x, y to image coordinates
-        image_x = x / scale
-        image_y = y / scale
+    #     # Get the size of the displayed pixmap
+    #     pixmap_size = pixmap.size()
 
-        return QPoint(int(image_x), int(image_y))
+    #     # Get the size of the image_label
+    #     label_size = self.image_label.size()
+
+    #     # Calculate the scale factor and offsets
+    #     if (self.original_pixmap.width() / self.original_pixmap.height()) > (
+    #             label_size.width() / label_size.height()):
+    #         # Image is wider than the label
+    #         scale = label_size.width() / self.original_pixmap.width()
+    #         scaled_height = self.original_pixmap.height() * scale
+    #         offset_x = 0
+    #         offset_y = (label_size.height() - scaled_height) / 2
+    #     else:
+    #         # Image is taller than the label
+    #         scale = label_size.height() / self.original_pixmap.height()
+    #         scaled_width = self.original_pixmap.width() * scale
+    #         offset_x = (label_size.width() - scaled_width) / 2
+    #         offset_y = 0
+
+    #     # Adjust label_pos to remove the offset
+    #     x = label_pos.x() - offset_x
+    #     y = label_pos.y() - offset_y
+
+    #     if x < 0 or y < 0 or x > pixmap_size.width() or y > pixmap_size.height():
+    #         return QPoint(-1, -1)
+
+    #     # Map the x, y to image coordinates
+    #     image_x = x / scale
+    #     image_y = y / scale
+
+    #     return QPoint(int(image_x), int(image_y))
 
     def mousePressEvent(self, event):
         if self.use_tablet:
