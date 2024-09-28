@@ -444,7 +444,6 @@ class PaintApp(QMainWindow):
         self.file_menu.setTitle(self.translations['File'])
         self.load_folder_action.setText(self.translations['Load Folder'])
         self.change_save_folder_action.setText(self.translations['Change Save Folder'])
-        self.settings_menu.setTitle(self.translations['Settings'])
         self.settings_action.setText(self.translations['Settings'])
 
     def mouse_button_to_name(self, button):
@@ -469,11 +468,10 @@ class PaintApp(QMainWindow):
         self.change_save_folder_action.triggered.connect(self.change_save_folder)
         self.file_menu.addAction(self.change_save_folder_action)
 
-        self.settings_menu = menubar.addMenu(self.translations['Settings'])
-
+        # Direct Settings action in the menu bar
         self.settings_action = QAction(self.translations['Settings'], self)
-        self.settings_action.triggered.connect(self.open_settings)
-        self.settings_menu.addAction(self.settings_action)
+        self.settings_action.triggered.connect(self.open_settings)  # This should open the settings window
+        menubar.addAction(self.settings_action)  # Add action directly to menubar
 
     def open_settings(self):
         dialog = SettingsDialog(self, self.key_name_to_code, self.code_to_key_name)
