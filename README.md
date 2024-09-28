@@ -1,5 +1,7 @@
 ![SketchRushLogo](https://github.com/NakamuraShippo/SketchRush/blob/main/image/SketchRushLogo.png)
-
+  
+[English Readme](https://github.com/NakamuraShippo/SketchRush/blob/main/Readme_EN.md)  
+  
 ## 概要
 SketchRushは、シンプルなドローツールです。  
 ペンタブレットやマウスを使用して、素早くスケッチやアイデアを形にすることができます。 
