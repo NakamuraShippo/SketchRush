@@ -28,6 +28,7 @@ Python 3.6以上がインストールされていることを確認します。
 ~~~
 #手動でもインストール可能です。
 python -m venv venv
+venv\Scripts\Activate
 pip install PyQt5 Pillow PyYAML
 ~~~
 boot_SketchRush.batをダブルクリックすると起動します。  
