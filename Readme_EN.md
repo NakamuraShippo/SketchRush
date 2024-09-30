@@ -88,9 +88,24 @@ Decrease Pen Size | Mouse Wheel Down
 - A function to write prompts and send them to ComfyUI to generate images within SketchRush  
 
 ## License
-SketchRush is protected by copyright law. Unauthorized reproduction, modification, or redistribution is prohibited.  
-Commercial use is allowed, but all responsibility lies with the tool user. The tool creator (Nakamura Shippo) assumes no responsibility.  
+SketchRush is licensed under the GNU General Public License version 3 (GPLv3).  
+  
+Under the GPLv3 license, the following rights are granted:  
 
+- Reproduction and Distribution: You are free to reproduce and distribute this software.
+- Modification: You can modify the source code and redistribute it.
+However, modified versions must also be released under GPLv3.
+- Commercial Use: You can use this software for commercial purposes.
+  
+### Disclaimer
+This software is provided “as is,” without any express or implied warranties, including but not limited to suitability for a particular purpose or non-infringement.  
+Users use the tool at their own risk.   The tool’s creator (Nakamura Shippo) is not responsible for any consequences arising from its use.  
+  
+### Copyright
+Copyright (C) 2024 Nakamura Shippo
+This program is free software.  
+Users can redistribute and/or modify it under the terms of the GNU General Public License version 3 (GPLv3).  
+  
 ## Contact
 For bugs, requests, or inquiries, please feel free to contact via issue or through SNS or email from the portal below.  
 Nakamura Shippo / [https://lit.link/nakamurashippo](https://lit.link/nakamurashippo)
