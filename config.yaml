@@ -1,8 +1,8 @@
 auto_advance: true
-background_color: '#ffaaff'
+background_color: '#ffffff'
 canvas_size:
-- 768
 - 512
+- 768
 colors:
 - '#000000'
 - '#ffffff'
@@ -11,28 +11,36 @@ colors:
 - '#ffff00'
 - '#00ff00'
 - '#ff00ff'
+default_simplify_tolerance: 5
+default_smooth_strength: 0
+delete_mode: "\u73FE\u5728\u306E\u30E2\u30FC\u30C9\u3060\u3051\u3092\u524A\u9664"
 key_config:
+  Add Control Point Modifier: Ctrl
   Clear: Delete
   Decrease Pen Size: Minus
+  Delete Control Point Modifier: Alt
   Eraser Tool: E
   Increase Pen Size: Plus
-  Merged Save: F1
+  Merged Save: S
   Next Color: C
   Next Image: Right
   Previous Color: V
   Previous Image: Left
   Redo: X
-  Save: Space
+  Save: A
+  Toggle Fill: F
+  Toggle Tool: Tab
   Undo: Z
 language_code: JP
 mouse_config:
   Decrease Pen Size: Wheel Down
   Eraser Tool: Right Button
   Increase Pen Size: Wheel Up
-  Pen Size Decrease: Wheel Down
-  Pen Size Increase: Wheel Up
   Pen Tool: Left Button
+path_hit_threshold: 12.2
 save_counter: 0
-save_folder: null
-save_name_template: SketchRush{:03d}.png
-use_tablet: false
+save_folder: ''
+save_mode: 1
+save_name_template: blackline{:03d}.png
+stabilization_degree: 0
+use_tablet: true

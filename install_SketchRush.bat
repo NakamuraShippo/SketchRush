@@ -20,7 +20,7 @@ call venv\Scripts\activate
 
 REM 必要なパッケージをインストール
 echo 必要なパッケージをインストールしています...
-pip install PyQt5 Pillow PyYAML
+pip install PyQt5 Pillow PyYAML scipy shapely numpy
 
 REM アプリケーションファイルのコピー
 echo アプリケーションファイルをコピーしています...
