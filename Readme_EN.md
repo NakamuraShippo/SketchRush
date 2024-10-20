@@ -11,6 +11,7 @@ It is suitable for applications that do not require advanced editing, such as 30
 - Supported formats: png, gif, bmp, jpeg, jpg, webp  
 - Drawing using a mouse  
 - Drawing using a pen tablet  
+- Path tool (B-Spline)/Pen tool  
 - Change pen color  
 - Change background color  
 - Save drawings as PNG with transparent background  
@@ -43,8 +44,9 @@ py main.py
 - Change the pen color using C (next color) and V (previous color) keys based on the configured colors.
 
 ### Path Mode
+- The path uses B-Spline.
 - Draw by left-clicking and dragging the mouse button. (Releasing the button finalizes the path)
-- You can select finalized paths.
+- You can select a confirmed path by switching to selection mode with the Q key (default setting).
   - Dragging within the selection area moves the path.
   - Selecting a path displays its control points, which can be dragged to alter the shape of the line segments.
   - Add control points by holding CTRL (modifiable) and left-clicking.
@@ -93,6 +95,7 @@ Decrease Pen Size | -
 Merge Save (Layer Integration Save) | F1  
 oggle Tool	| Tab
 Toggle Fill (Path Tool) | F
+Toggle Path Mode | Q
 
 #### Mouse Settings
 | Function | Key |
